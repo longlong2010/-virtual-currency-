@@ -17,6 +17,9 @@ def kline(symbol, type):
     else:
         return [];
 
+buy_points = [[], []];
+sell_points = [[], []];
+
 if __name__ == '__main__':
     #比特币日K线数据
     data = kline('btc_cny', '1week');
@@ -34,7 +37,8 @@ if __name__ == '__main__':
                     break;
             if j == 8:
                 print("Buy %s" % data[i][0]);
-
+                buy_points[0].append(data[i][0]);
+                buy_points[1].append(data[i][4]);
             #卖出结构，连续9次收盘价都高于四天前的收盘价
             for j in range(0, 9):
                 k = i - j;
@@ -44,8 +48,12 @@ if __name__ == '__main__':
                     break;
             if j == 8:
                 print("Sell %s" % data[i][0]);
+                sell_points[0].append(data[i][0]);
+                sell_points[1].append(data[i][4]);
     
     _, ax = matplotlib.pyplot.subplots();
     ax.xaxis_date();
     matplotlib.finance.candlestick_ohlc(ax, data);
+    matplotlib.pyplot.plot(buy_points[0], buy_points[1], 'o');
+    matplotlib.pyplot.plot(sell_points[0], sell_points[1], 'x');
     matplotlib.pyplot.show();
