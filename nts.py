@@ -46,5 +46,6 @@ if __name__ == '__main__':
                 print("Sell %s" % data[i][0]);
     
     _, ax = matplotlib.pyplot.subplots();
+    ax.xaxis_date();
     matplotlib.finance.candlestick_ohlc(ax, data);
     matplotlib.pyplot.show();
